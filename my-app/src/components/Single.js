@@ -1,0 +1,57 @@
+import React from 'react';
+
+import Photo from './photo';
+import Comments from './Comments';
+
+class Single extends React.Component {
+    render() {
+        const { match, posts } = this.props;
+        const id = Number(match.params.id);
+
+        const post = posts.find((post) => post.id === id)
+        console.log(this.props.comments);
+        const comments = this.props.comments[id] || [];
+        const index = this.props.posts.findIndex((post) => post.id === id)
+        // console.log(post); 
+        if(this.props.loading === true) {
+           return <div className = "loader"> ...loading:) </div>
+        } else if(post) {
+            return (
+                <div className = 'single-photo'>
+                    <Photo post = {post} { ...this.props } index = { index } comments = {comments} />
+                    <Comments startAddingComments = {this.props.startAddingComments} comments = {comments} id = {id}/> 
+                </div>
+            )
+        } else {
+             return <h1>No  post found :(</h1>
+        }
+        
+    }
+}
+
+export default Single;
+
+// import React, {Component} from 'react'
+// import Photo from './photo'
+// import Comments from './Comments'
+// class Single extends Component {
+//  render() {
+//  const {match, posts} = this.props
+//  const id = Number(match.params.id)
+//  const post = posts.find((post) => post.id === id)
+//  const comments = this.props.comments[match.params.id] || []
+//  const index = this.props.posts.findIndex((post) => post.id === id)
+
+//  if(this.props.loading === true) {
+//     return <div className = "loader"> ...loading </div>
+//  } else if(post){
+//     return <div className='single-photo'>
+//     <Photo post={post} {...this.props} index={index}/>
+//     <Comments startAddingComment={ this.props.startAddingComment } comments={comments} id = {id}/>
+//     </div> 
+//  } else {
+//      return <h1>No post found</h1>
+//  }
+// } 
+// }
+// export default Single
